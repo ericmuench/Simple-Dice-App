@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DiceApp</string>
+    <string name="tap_to_generate_new_number">Tap to generate new dice number!</string>
+</resources>
