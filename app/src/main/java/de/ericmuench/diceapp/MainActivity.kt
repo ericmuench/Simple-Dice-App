@@ -1,24 +1,23 @@
 package de.ericmuench.diceapp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import de.ericmuench.diceapp.ui.composables.SimpleDiceView
+import de.ericmuench.diceapp.ui.composables.*
 import de.ericmuench.diceapp.ui.theme.DiceAppTheme
 import de.ericmuench.diceapp.viewmodel.MainViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel;
-import de.ericmuench.diceapp.ui.composables.ClassicDiceView
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.ericmuench.diceapp.util.MenuItem
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +38,23 @@ fun MainScreen(viewModel: MainViewModel = viewModel()){
 
 @Composable
 fun MainScreenContent(displayNumber: Int, onDice: () -> Unit){
+    val context = LocalContext.current
     DiceAppTheme {
         Scaffold(
             topBar = {
-                TopAppBar(backgroundColor = MaterialTheme.colors.primary) {
-                    Text("Dice App")
-                }
+                AppBar(
+                    title = stringResource(id = R.string.app_name),
+                    menuItems = listOf(
+                        MenuItem(
+                            title = stringResource(id = R.string.settings),
+                            onClick = {
+                                //TODO: Navigate to settings
+                                Toast.makeText(context,"test", Toast.LENGTH_SHORT).show()
+                                println("TEST")
+                            }
+                        )
+                    )
+                )
             }
         ) {
             Box(
