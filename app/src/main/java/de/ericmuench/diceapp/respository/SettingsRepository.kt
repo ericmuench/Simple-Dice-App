@@ -15,6 +15,8 @@ import de.ericmuench.diceapp.R
 import de.ericmuench.diceapp.model.DiceDisplayMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
 
@@ -28,31 +30,39 @@ class SettingsRepository(appContext : Context) {
     //endregion
 
     //region variables
-    val test = appContext.getString(R.string.goback)
-
     private val dataStore = PreferenceDataStoreFactory.create(
         produceFile = {
             appContext.preferencesDataStoreFile("settings")
         }
     )
-    //endregion
 
-    //region LiveData
-    private val _diceDisplayMode = getDiceDisplayMode().asLiveData(Dispatchers.IO)
-    val diceDisplayMode : LiveData<DiceDisplayMode> = _diceDisplayMode
+    private var diceDisplayMode : DiceDisplayMode? = null
     //endregion
-
 
     //region functions
-    private fun getDiceDisplayMode() : Flow<DiceDisplayMode>{
-        return readStringFromDataStore(DICE_DISPLAY_MODE_DATASTORE_KEY).map {
-            if(it == null){
-                DiceDisplayMode.CLASSIC
-            }
-            else{
-                DiceDisplayMode.valueOf(it)
+    fun getDiceDisplayMode() : Flow<DiceDisplayMode>{
+        val currentMode = diceDisplayMode
+        return if(currentMode == null){
+            readStringFromDataStore(DICE_DISPLAY_MODE_DATASTORE_KEY).map {
+                val mode = if(it == null){
+                    DiceDisplayMode.CLASSIC
+                }
+                else{
+                    DiceDisplayMode.valueOf(it)
+                }
+
+                diceDisplayMode = mode
+
+                return@map mode
             }
         }
+        else{
+            flow{
+                emit(currentMode)
+            }
+        }
+
+
     }
 
     private fun readStringFromDataStore(key: String) : Flow<String?> {
