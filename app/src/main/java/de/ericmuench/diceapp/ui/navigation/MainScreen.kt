@@ -1,6 +1,5 @@
 package de.ericmuench.diceapp.ui.navigation
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,19 +7,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import de.ericmuench.diceapp.R
 import de.ericmuench.diceapp.ui.composables.AppBar
 import de.ericmuench.diceapp.ui.composables.ClassicDiceView
-import de.ericmuench.diceapp.ui.theme.DiceAppTheme
 import de.ericmuench.diceapp.util.MenuItem
 import de.ericmuench.diceapp.util.MenuItemMode
 import de.ericmuench.diceapp.util.navigate
@@ -49,7 +44,7 @@ fun MainScreenContent(displayNumber: Int, onDice: () -> Unit, navController: Nav
                         displayTitleUnderIcon = false,
                         itemMode = MenuItemMode.NEVER,
                         onClick = {
-                            navController?.navigate(AppRoutes.SETTINGS)
+                            navController?.navigate(AppRouteId.SETTINGS)
                         }
                     )
                 )
@@ -63,7 +58,6 @@ fun MainScreenContent(displayNumber: Int, onDice: () -> Unit, navController: Nav
                 .fillMaxSize()
         ) {
             ClassicDiceView(displayNumber, onClick = onDice)
-
         }
     }
 }

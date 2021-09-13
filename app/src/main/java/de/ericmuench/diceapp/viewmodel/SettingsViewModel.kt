@@ -11,4 +11,6 @@ class SettingsViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
     val testData = MutableStateFlow(settingsRepository.test)
+
+    val diceDisplayMode = settingsRepository.diceDisplayMode
 }

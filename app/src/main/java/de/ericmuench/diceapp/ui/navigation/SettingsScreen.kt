@@ -5,13 +5,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import de.ericmuench.diceapp.R
 import de.ericmuench.diceapp.viewmodel.SettingsViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun SettingsScreen(
@@ -33,6 +32,7 @@ fun SettingsScreen(
             )
         }
     ) {
-        Text(viewModel.testData.value)
+        val testVal = viewModel.diceDisplayMode.observeAsState()
+        Text(testVal.value?.title ?: "no value")
     }
 }
