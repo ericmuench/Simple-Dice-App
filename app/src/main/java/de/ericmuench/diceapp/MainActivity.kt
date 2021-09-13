@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +20,7 @@ import de.ericmuench.diceapp.ui.theme.DiceAppTheme
 import de.ericmuench.diceapp.viewmodel.MainViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.ericmuench.diceapp.util.MenuItem
+import de.ericmuench.diceapp.util.MenuItemMode
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,9 @@ fun MainScreenContent(displayNumber: Int, onDice: () -> Unit){
                     menuItems = listOf(
                         MenuItem(
                             title = stringResource(id = R.string.settings),
+                            icon = Icons.Default.Settings,
+                            displayTitleUnderIcon = false,
+                            itemMode = MenuItemMode.NEVER,
                             onClick = {
                                 //TODO: Navigate to settings
                                 Toast.makeText(context,"test", Toast.LENGTH_SHORT).show()
