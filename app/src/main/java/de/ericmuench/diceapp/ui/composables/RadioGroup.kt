@@ -16,17 +16,19 @@ import androidx.compose.ui.Modifier
 @Composable
 fun <T : Any> RadioGroup(
     items: List<T>,
-    selectedIndex: MutableState<Int> = remember { mutableStateOf(0) },
+    selectedItem: T,
+    onSelectionChanged: (T) -> Unit = {},
     itemTitle: @Composable (T) -> Unit = { Text(it.toString()) }
 ){
     Column {
+        val selectedIndex = items.indexOf(selectedItem)
         for(idx in items.indices){
             Row {
                 RadioButton(
                     colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colors.primary),
-                    selected = idx == selectedIndex.value,
+                    selected = idx == selectedIndex,
                     onClick = {
-                        selectedIndex.value = idx
+                        onSelectionChanged.invoke(items[idx])
                     }
                 )
                 itemTitle.invoke(items[idx])

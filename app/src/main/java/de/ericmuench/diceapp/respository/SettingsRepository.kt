@@ -65,6 +65,17 @@ class SettingsRepository(appContext : Context) {
 
     }
 
+    suspend fun setDiceDisplayMode(mode : DiceDisplayMode) : Unit{
+        if(mode != diceDisplayMode){
+            writeStringToDataStore(
+                DICE_DISPLAY_MODE_DATASTORE_KEY,
+                mode.toString()
+            )
+
+            diceDisplayMode = mode
+        }
+    }
+
     private fun readStringFromDataStore(key: String) : Flow<String?> {
         val dataStoreKey = stringPreferencesKey(key)
         return dataStore.data.map { it[dataStoreKey] }

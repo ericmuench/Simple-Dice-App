@@ -6,13 +6,13 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import de.ericmuench.diceapp.R
+import de.ericmuench.diceapp.model.DiceDisplayMode
 import de.ericmuench.diceapp.ui.composables.RadioGroup
 import de.ericmuench.diceapp.viewmodel.SettingsViewModel
 
@@ -36,13 +36,28 @@ fun SettingsScreen(
             )
         }
     ) {
-        val testVal = viewModel.diceDisplayMode.observeAsState()
-        Column {
-            Text(testVal.value?.title ?: "no value")
-            RadioGroup<String>(items = listOf("Hello", "World", "1234"))
+        val diceDisplayMode = viewModel.diceDisplayMode.observeAsState()
+
+        if(diceDisplayMode.value != null){
+            Column {
+                Text(diceDisplayMode.value?.title ?: "no value")
+                val displayModes = DiceDisplayMode.values().toList()
+                RadioGroup<DiceDisplayMode>(
+                    items = displayModes,
+                    selectedItem = diceDisplayMode.value!!,
+                    onSelectionChanged = {
+                        viewModel.setDiceDisplayMode(it)
+                    },
+                    itemTitle = {
+                        Text(it.title)
+                    }
+                )
+            }
         }
 
-        LaunchedEffect(key1 = true){
+
+
+        SideEffect {
             viewModel.loadSettings()
         }
 

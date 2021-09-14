@@ -18,12 +18,25 @@ class SettingsViewModel @Inject constructor(
     private val _diceDisplayMode = MutableLiveData<DiceDisplayMode>()
     val diceDisplayMode : LiveData<DiceDisplayMode> = _diceDisplayMode
 
-    suspend fun loadSettings() : Unit {
+    fun loadSettings() : Unit {
         viewModelScope.launch(Dispatchers.IO){
             settingsRepository.getDiceDisplayMode().collect {
                 _diceDisplayMode.postValue(it)
             }
         }
+    }
 
+    fun setDiceDisplayMode(mode: DiceDisplayMode): Unit{
+        viewModelScope.launch(Dispatchers.IO) {
+            val job = launch {
+                settingsRepository.setDiceDisplayMode(mode)
+            }
+
+            job.join()
+
+            settingsRepository.getDiceDisplayMode().collect {
+                _diceDisplayMode.postValue(it)
+            }
+        }
     }
 }
