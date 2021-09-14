@@ -1,6 +1,9 @@
 package de.ericmuench.diceapp.model
 
-enum class DiceDisplayMode(val title: String) {
-    SIMPLE("simple"),
-    CLASSIC("classic")
+import androidx.compose.ui.res.stringResource
+import de.ericmuench.diceapp.R
+
+enum class DiceDisplayMode(val titleId: Int) {
+    SIMPLE(R.string.simple),
+    CLASSIC(R.string.classic)
 }
