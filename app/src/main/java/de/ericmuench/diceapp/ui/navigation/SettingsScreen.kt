@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import de.ericmuench.diceapp.R
 import de.ericmuench.diceapp.model.DiceDisplayMode
+import de.ericmuench.diceapp.ui.composables.LoadingContent
 import de.ericmuench.diceapp.ui.composables.RadioGroup
 import de.ericmuench.diceapp.viewmodel.SettingsViewModel
 
@@ -61,9 +62,7 @@ fun SettingsScreen(
             }
         }
         else{
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                CircularProgressIndicator()
-            }
+            LoadingContent()
         }
 
 

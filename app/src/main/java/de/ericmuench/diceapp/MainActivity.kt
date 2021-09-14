@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import de.ericmuench.diceapp.ui.theme.DiceAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import de.ericmuench.diceapp.model.DiceDisplayMode
 import de.ericmuench.diceapp.ui.navigation.*
 
 @ExperimentalAnimationApi
@@ -26,7 +27,6 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 )
-
                 AppNavigation(routes = routes, startRoute = startRoute)
             }
         }
@@ -38,8 +38,9 @@ class MainActivity : ComponentActivity() {
 
 
 
+@ExperimentalAnimationApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MainScreenContent(displayNumber = 6, {})
+    MainScreenContent(DiceDisplayMode.CLASSIC,displayNumber = 6, {})
 }
